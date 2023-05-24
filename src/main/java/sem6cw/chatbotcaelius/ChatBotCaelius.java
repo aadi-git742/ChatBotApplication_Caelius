@@ -35,7 +35,7 @@ import org.json.JSONObject;
 public class ChatBotCaelius 
 {
 private JTextArea mainArea = new JTextArea(25,60);
-    private JTextField ch_box = new JTextField(40);
+    private JTextField ch_box = new JTextField(" ",40);
     
     public static String getResponse(String s) throws URISyntaxException, IOException, InterruptedException, JSONException 
     {
@@ -48,7 +48,7 @@ private JTextArea mainArea = new JTextArea(25,60);
         req.put("max_tokens", 2000);
 //        System.out.println(req);
         String req_body = req.toString();
-        String api_key = "Bearer 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";
+        String api_key = "Bearer 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";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(api_uri))
                 .header("Authorization", api_key)
@@ -59,6 +59,7 @@ private JTextArea mainArea = new JTextArea(25,60);
         HttpResponse<String> resp = cl.send(request, HttpResponse.BodyHandlers.ofString());
         int respCode = resp.statusCode();
         String respBody = resp.body();
+//        System.out.println(respBody);
         JSONObject result = new JSONObject(respBody);
         JSONArray choicesArray = result.getJSONArray("choices");
         JSONObject choices = choicesArray.getJSONObject(0);
@@ -94,14 +95,15 @@ private JTextArea mainArea = new JTextArea(25,60);
         ch_box.setBackground(new Color(90, 90, 90));
         ch_box.setForeground(Color.white);
         ch_box.setFont(f);
-       
+        ch_box.setCaretColor(new Color(255,204,0));
+        
         ch_box.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) 
             {
                 String query = ch_box.getText();
                 mainArea.append("USER -> " + query + "\n");
-                ch_box.setText("");
+                ch_box.setText(" ");
                 ch_box.setEditable(true);
                 String response ="";
                 try {
